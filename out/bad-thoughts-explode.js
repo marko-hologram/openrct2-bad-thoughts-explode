@@ -120,16 +120,20 @@ var guestMap = {};
 var isBadThought = function (thought) {
     return badThoughts.some(function (badThought) { return thought.type === badThought; });
 };
-var isAnyThoughtBad = function (thoughts) {
-    return thoughts.some(function (thought) { return isBadThought(thought); });
+var getBadThoughtsFromGuest = function (guest) {
+    return guest.thoughts.filter(function (thought) { return isBadThought(thought); });
 };
 var getGuestsWithBadThoughts = function () {
     var unhappyGuests = [];
     var allGuests = map.getAllEntities("guest");
     for (var i = 0; i < allGuests.length; i++) {
         var guest = allGuests[i];
-        if (guest.isInPark && isAnyThoughtBad(guest.thoughts)) {
-            unhappyGuests.push(guest);
+        if (guest.isInPark) {
+            var badThoughts_1 = getBadThoughtsFromGuest(guest);
+            if (badThoughts_1.length > 0 && guest.id) {
+                unhappyGuests.push(guest);
+                park.postMessage({ text: "".concat(guest.name, " will explode for thinking ").concat(badThoughts_1[0].toString()), type: "peep", subject: guest.id });
+            }
         }
     }
     return unhappyGuests;

@@ -127,8 +127,8 @@ const isBadThought = (thought: Thought): boolean => {
   return badThoughts.some((badThought) => thought.type === badThought);
 };
 
-const isAnyThoughtBad = (thoughts: Thought[]): boolean => {
-  return thoughts.some((thought) => isBadThought(thought));
+const getBadThoughtsFromGuest = (guest: Guest): Thought[] => {
+  return guest.thoughts.filter((thought) => isBadThought(thought));
 };
 
 const getGuestsWithBadThoughts = (): Guest[] => {
@@ -139,8 +139,14 @@ const getGuestsWithBadThoughts = (): Guest[] => {
   for (let i = 0; i < allGuests.length; i++) {
     const guest = allGuests[i];
 
-    if (guest.isInPark && isAnyThoughtBad(guest.thoughts)) {
-      unhappyGuests.push(guest);
+    if (guest.isInPark) {
+      const badThoughts = getBadThoughtsFromGuest(guest);
+
+      if (badThoughts.length > 0 && guest.id) {
+        unhappyGuests.push(guest);
+
+        park.postMessage({ text: `${guest.name} will explode for thinking ${badThoughts[0].toString()}`, type: "peep", subject: guest.id });
+      }
     }
   }
 
