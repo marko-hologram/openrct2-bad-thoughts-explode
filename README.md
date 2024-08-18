@@ -10,13 +10,22 @@ Download the plugin ZIP from the the Releases page of this repository https://gi
 
 Find your OpenRCT2 directory.
 
-- Windows: C:\Users\YourName\Documents\OpenRCT2
-- Mac: /Users/YourName/Library/Application Support/OpenRCT2
-- Linux: $XDG_CONFIG_HOME/OpenRCT2 or in its absence $HOME/.config/OpenRCT2
+- Windows: `C:\Users\YourName\Documents\OpenRCT2`
+- Mac: `/Users/YourName/Library/Application Support/OpenRCT2`
+- Linux: `$XDG_CONFIG_HOME/OpenRCT2` or in its absence `$HOME/.config/OpenRCT2`
 
 Extract the downloaded ZIP into that directory.
 
-Start the game and you should see the message that the plugin loaded, but is not enabled. You have to enable it manually.
+This should be your final folder structure:
+
+```
+└── OpenRCT2/
+    └── plugin/
+        └── openrct2-bad-thoughts-explode/
+            └── bad-thoughts-explode.js
+```
+
+Start the game and you should see the message that the plugin loaded, but is not enabled. You have to enable it manually. This was done just so that guests don't start exploding right away immediately when you start a scenario.
 
 ## Caveats
 
