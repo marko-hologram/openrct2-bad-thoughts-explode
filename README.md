@@ -27,6 +27,10 @@ This should be your final folder structure:
 
 Start the game and you should see the message that the plugin loaded, but is not enabled. You have to enable it manually. This was done just so that guests don't start exploding right away immediately when you start a scenario.
 
+You can enable the plugin in its settings which can be opened here:
+
+![Screenshot of Rollercoaster Tycoon 2 showing that Bad Thoughts Explode plugin window can be opened from the map dropdown menu and clicking on Bad Thoughts Explode menu item](openrct2-bad-thoughts-explode-plugin-screenshot-menu.png)
+
 ## Caveats
 
 This plugin doesn't instantly explode guests when they start having a negative thought. It checks every day which guests have negative thoughts and "marks" them to be exploded. Then game then decides when to explode them. I don't know all the details when that happens, but it's possible it happens the next day.
