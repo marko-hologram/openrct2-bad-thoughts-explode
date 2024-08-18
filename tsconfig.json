@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+      "lib": ["ES5"],
+      "outFile": "./out/bad-thoughts-explode.js",
+      "target": "ES5",
+      "removeComments": true,
+      "strict": true,
+  },
+  "files": ["src/index.ts", "types/openrct2.d.ts"]
+}
