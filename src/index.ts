@@ -1,4 +1,5 @@
 let isBadThoughtsExplodePluginEnabled = false;
+let areExplodeMessagesDisabled = false;
 
 let explodedCount = 0;
 
@@ -82,7 +83,7 @@ const togglePluginWindow = (): void => {
       classification: "bad_thoughts_explode",
       title: "Bad Thoughts Explode",
       width: 200,
-      height: 65,
+      height: 90,
       widgets: [
         {
           type: "checkbox",
@@ -98,10 +99,24 @@ const togglePluginWindow = (): void => {
           },
         },
         {
+          type: "checkbox",
+          name: "disable_messages",
+          x: 10,
+          y: 40,
+          width: 280,
+          height: 20,
+          text: "Disable messages",
+          tooltip: "Disable showing messages when guests are marked to be exploded. This is just to reduce spam.",
+          isChecked: areExplodeMessagesDisabled,
+          onChange(isChecked) {
+            areExplodeMessagesDisabled = isChecked;
+          },
+        },
+        {
           type: "label",
           name: "exploded_count",
           x: 10,
-          y: 40,
+          y: 70,
           width: 280,
           height: 20,
           text: `Exploded guests: ${explodedCount}`,
@@ -145,7 +160,9 @@ const getGuestsWithBadThoughts = (): Guest[] => {
       if (badThoughts.length > 0 && guest.id) {
         unhappyGuests.push(guest);
 
-        park.postMessage({ text: `${guest.name} will explode for thinking ${badThoughts[0].toString()}`, type: "peep", subject: guest.id });
+        if (!areExplodeMessagesDisabled) {
+          park.postMessage({ text: `${guest.name} will explode for thinking ${badThoughts[0].toString()}`, type: "peep", subject: guest.id });
+        }
       }
     }
   }

@@ -1,5 +1,6 @@
 "use strict";
 var isBadThoughtsExplodePluginEnabled = false;
+var areExplodeMessagesDisabled = false;
 var explodedCount = 0;
 var badThoughts = [
     "cant_afford_ride",
@@ -80,7 +81,7 @@ var togglePluginWindow = function () {
             classification: "bad_thoughts_explode",
             title: "Bad Thoughts Explode",
             width: 200,
-            height: 65,
+            height: 90,
             widgets: [
                 {
                     type: "checkbox",
@@ -96,10 +97,24 @@ var togglePluginWindow = function () {
                     },
                 },
                 {
+                    type: "checkbox",
+                    name: "disable_messages",
+                    x: 10,
+                    y: 40,
+                    width: 280,
+                    height: 20,
+                    text: "Disable messages",
+                    tooltip: "Disable showing messages when guests are marked to be exploded. This is just to reduce spam.",
+                    isChecked: areExplodeMessagesDisabled,
+                    onChange: function (isChecked) {
+                        areExplodeMessagesDisabled = isChecked;
+                    },
+                },
+                {
                     type: "label",
                     name: "exploded_count",
                     x: 10,
-                    y: 40,
+                    y: 70,
                     width: 280,
                     height: 20,
                     text: "Exploded guests: ".concat(explodedCount),
@@ -132,7 +147,9 @@ var getGuestsWithBadThoughts = function () {
             var badThoughts_1 = getBadThoughtsFromGuest(guest);
             if (badThoughts_1.length > 0 && guest.id) {
                 unhappyGuests.push(guest);
-                park.postMessage({ text: "".concat(guest.name, " will explode for thinking ").concat(badThoughts_1[0].toString()), type: "peep", subject: guest.id });
+                if (!areExplodeMessagesDisabled) {
+                    park.postMessage({ text: "".concat(guest.name, " will explode for thinking ").concat(badThoughts_1[0].toString()), type: "peep", subject: guest.id });
+                }
             }
         }
     }
